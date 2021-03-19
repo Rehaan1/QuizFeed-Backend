@@ -17,6 +17,7 @@
 - [X]   Make sure quiz can be given once only
 - [ ]   Make Sure only non-attempted quizes are shown
 - [ ]   Security Features
+- [ ]   Add the additional features of mcq, private and publuc  quizes
 - [ ]   ----------THE END OF FEATURES ADDITIONAL ------
 
 # QuizFeed-Backend
@@ -24,15 +25,14 @@ Backend of Authentication and Management of Quizfeed
 Hoisted at https://quizfeedapi.herokuapp.com/
 
 # For Documentation Refer : 
-https://documenter.getpostman.com/view/14038453/Tz5iAgcM
+https://documenter.getpostman.com/view/14038453/Tz5v3vLJ
 
 ## DOCUMENTATION
 
 # USER SIGNUP
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/user/signup 
-2. Expecting Name, Email, Password, Access as name(string), email(string), password(string), access(string) in JSON Format in Body
-   #### NOTE: Access can be of three types only- student / teacher / admin
-4. If Successfully Registered, returns JSON containing Message, Name,Email,Access, and Request Possible
+2. Expecting Name, Email, Password, Access as name(string), email(string), password(string) in JSON Format in Body
+4. If Successfully Registered, returns JSON containing Message, Name,Email, and Request Possible
 
 ## Example Body for USER SIGNUP
 In JSON format
@@ -40,30 +40,29 @@ In JSON format
 {
    "name":"quziey",
    "email":"quizey@gmail.com",
-   "password":"12345678",
-   "access":"student"
+   "password":"12345678"
 }
 ```
 
 # USER LOGIN
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/user/login
 2. Expecting Email, Password as email(string), password(string) in JSON format in Body
-3. If Successfully Logged In, returns JSON containing message, access, and Token
+3. If Successfully Logged In, returns JSON containing message, and Token
 
 # CREATING A QUIZ
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/createquiz
-2. Header must have Authorization Token with access of teacher
+2. Header must have Authorization Token
 3. Expecting Quizname, Questions as quizname(string), questions(array of question (string)) in JSON format in Body
 4. If Successfully quiz created, returns JSON containing message, quiz id, and url to access quiz data
 
 # GETTING ALL QUIZES
 1. Access Route Using GET Method https://quizfeedapi.herokuapp.com/quiz/showAllQuizes
-2. Header must have Authorization Token with access of student
+2. Header must have Authorization Token
 3. If Successfully returns JSON containing key value pairs of quiz_name as key and quiz_id as value
 
 # GETTING ALL QUIZES CREATED BY TEACHER
 1. Access Route Using GET Method https://quizfeedapi.herokuapp.com/quiz/showAllCreatedQuizes
-2. Header must have Authorization Token with access of teacher
+2. Header must have Authorization Token with
 3. If Successfully returns JSON containing key value pairs of quiz_name as key and quiz_id as value created by teeacher
 
 # GETTING QUIZNAME BY QUIZ ID
@@ -80,36 +79,36 @@ In JSON format
 
 # SENDING ANSWER TO QUIZ QUESTIONS
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/answer 
-2. Header must have Authorization Token with access student
+2. Header must have Authorization Token
 3. Expecting quiz_id, question_ids of the quiz, answers as quiz_id(int), question_ids(array of question_id(int)), answers(array of answer(string)) in JSON format in Body
 4. NOTE: The question_ids array and the answers array must be in order
 5. If Successfully answer enter, returns JSON containing message
 
 # GETTING ALL ANSWER TO A QUIZ FOR A STUDENT
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/answer/getAnswer 
-2. Header must have Authorization Token with access teacher
+2. Header must have Authorization Token
 3. Expecting quiz_id, p_id of the quiz, person(student) as quiz_id(int), p_id(int) in JSON format in Body
 5. If Successful, returns JSON containing an array of all the answers of the questions of the quiz in order 
 
 # GETTING ALL STUDENTS WHO ATTEMPTED A QUIZ BY QUIZ ID
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/showAllAttempted 
-2. Header must have Authorization Token with access teacher
+2. Header must have Authorization Token
 3. Expecting quiz_id as quiz_id(int) in  JSON format in Body
 4. If Successfull returns persons_attempt Json containing Person ID as Key and Person Name as Value
 
 # ENTERING MARKS FOR A STUDENT FOR A QUIZ
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/marks/enter 
-2. Header must have Authorization Token with access teacher
+2. Header must have Authorization Token
 3. Expecting quiz_id,p_id of student, mark as quiz_id(int), p_id(int), mark(int) in  JSON format in Body
 4. If Succesful returns Json containing message
 
 # GETTING ALL MARKS OF STUDENT 
 1. Access Route Using GET Method https://quizfeedapi.herokuapp.com/marks/getStudentMarks 
-2. Header must have Authorization Token with access student
+2. Header must have Authorization Token
 3. If Successfull returns all_marks Json containing quiz_id as Key and mark as Value of that student
 
 # GETTING  MARKS OF STUDENT BY ID
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/marks/getStudentMarksByPID 
-2. Header must have Authorization Token with access teacher
+2. Header must have Authorization Token
 3. Expecting p_id as p_id(int) in  JSON format in Body
 4. If Successfull returns all_marks Json containing quiz_id as Key and mark as Value
