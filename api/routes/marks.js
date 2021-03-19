@@ -36,8 +36,6 @@ router.post("/enter",checkAuth,(req,res)=>{
         })
     }
 
-    if(req.userData.access == "teacher")
-    {
         pool.getConnection((err,con)=>{
             if(err)
             {
@@ -112,16 +110,8 @@ router.post("/enter",checkAuth,(req,res)=>{
                 });
             }
         });
-    }
-    else
-    {
-        res.status(500).json({
-            message: "Unauthorized Access of Route"
-        })
-    }
-
     
-
+    
 });
 
 router.get("/getStudentMarks",checkAuth,(req,res)=>{
@@ -167,8 +157,6 @@ router.post("/getStudentMarksByPID",checkAuth,(req,res)=>{
             Message: "Required Data to be Sent Missing Please Refer Documentation"
         })
     }
-    if(req.userData.access == "teacher")
-    {
         pool.getConnection((err,con)=>{
             if(err)
             {
@@ -202,7 +190,7 @@ router.post("/getStudentMarksByPID",checkAuth,(req,res)=>{
                 });
             }   
         });
-    }
+    
 });
 
 

@@ -36,8 +36,7 @@ router.post("/",checkAuth,(req,res,next)=>{
         })
     }
 
-    if(req.userData.access == "student")
-    {
+    
         pool.getConnection((err,con)=>{
             if(err)
             {
@@ -148,13 +147,7 @@ router.post("/",checkAuth,(req,res,next)=>{
                 
             }
         });
-    }
-    else
-    {
-        res.status(500).json({
-            message: "Unauthorized Access of Route"
-        })
-    }
+    
 });
 
 router.post("/getAnswer",checkAuth,(req,res)=>{
@@ -173,8 +166,8 @@ router.post("/getAnswer",checkAuth,(req,res)=>{
         })
     }
 
-    if(req.userData.access == "teacher")
-    {
+    
+    
         pool.getConnection((err,con)=>{
             if(err)
             {
@@ -233,15 +226,7 @@ router.post("/getAnswer",checkAuth,(req,res)=>{
                 });
             }
         });
-    }
-    else
-    {
-        res.status(500).json({
-            message: "Unauthorized Access of Route"
-        })
-    }
-
-
+    
 });
 
 module.exports = router;

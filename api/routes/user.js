@@ -45,12 +45,6 @@ router.post("/signup",(req,res,next) =>{
             Message: "Required Data to be Sent Missing Please Refer Documentation"
         })
     }
-    if(!req.body.access)
-    {
-      return res.status(400).json({
-            Message: "Required Data to be Sent Missing Please Refer Documentation"
-        })
-    }
 
     //connectiong to database and returning back connection as con
     pool.getConnection((err,con) =>{
@@ -102,7 +96,7 @@ router.post("/signup",(req,res,next) =>{
                           else
                           {
                               //Insert Data to Database
-                              con.query("INSERT INTO users (name,email,password,access) values(?,?,?,?)",[req.body.name,req.body.email,hash,req.body.access],(err,rows,fields) => {
+                              con.query("INSERT INTO users (name,email,password) values(?,?,?)",[req.body.name,req.body.email,hash],(err,rows,fields) => {
                                   if(err)
                                   {
                                       con.release();  // return the connection to pool
@@ -118,7 +112,6 @@ router.post("/signup",(req,res,next) =>{
                                           message:"Signed Up Successful",
                                           name: req.body.name,
                                           email: req.body.email,
-                                          access: req.body.access,
                                           request:{
                                             type:"POST",
                                             url:"https://localhost:3000/user/login"
@@ -214,8 +207,7 @@ router.post("/login",(req,res,next)=>{
                             {
                                name: rows[0].name,
                                email: rows[0].email,
-                               p_id: rows[0].p_id,
-                               access:rows[0].access
+                               p_id: rows[0].p_id
                             },
                             process.env.JWT_KEY,
                             {
@@ -226,7 +218,6 @@ router.post("/login",(req,res,next)=>{
                           return res.status(200).json({
                               message:"Auth Successfull",
                               name:rows[0].name,
-                              access:rows[0].access,
                               token:token
                           });
                       }
@@ -248,7 +239,7 @@ router.post("/login",(req,res,next)=>{
 
 router.delete("/:userId",(req,res,next) =>{
     res.status(200).json({
-        Message:"User Delete user id: "+req.params.userId
+        Message:"User Delete user id TO BE DONE: "+req.params.userId
     });
 });
 

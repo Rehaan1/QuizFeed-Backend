@@ -34,8 +34,7 @@ router.get("/createquiz",(req,res,next)=>{
 });
 
 router.get("/showAllQuizes",checkAuth,(req,res,next)=>{
-    if(req.userData.access == "student")
-    {
+    
         pool.getConnection((err,con)=>{
             if(err)
             {
@@ -48,7 +47,7 @@ router.get("/showAllQuizes",checkAuth,(req,res,next)=>{
             {
                 console.log("\nDatabase Connection Established Successfully");
                 console.log("-----------------------------------------------");
-                con.query("SELECT * FROM quiz_details",(err,rows,fields)=>{
+                con.query("SELECT quiz_name, quiz_details.quiz_id FROM quiz_details JOIN person_quiz ON person_quiz.quiz_id = quiz_details.quiz_id WHERE p_id <> ?",[req.userData.p_id],(err,rows,fields)=>{
                     if(err)
                     {
                         con.release();  // return the connection to pool
@@ -71,13 +70,7 @@ router.get("/showAllQuizes",checkAuth,(req,res,next)=>{
 
             }
         });
-    }
-    else
-    {
-        res.status(500).json({
-            message: "Unauthorized Access of Route"
-        })
-    }
+    
 }); 
 
 router.post("/createquiz",checkAuth,(req,res,next)=>{
@@ -96,8 +89,8 @@ router.post("/createquiz",checkAuth,(req,res,next)=>{
         })
     }
 
-    if(req.userData.access == "teacher")
-    {
+    
+    
 
       pool.getConnection((err,con) => {
           if(err)
@@ -221,14 +214,6 @@ router.post("/createquiz",checkAuth,(req,res,next)=>{
             });
           }
       });
-
-    }
-    else
-    {
-        res.status(500).json({
-            message:"Unauthorized access"
-          });
-    }
 });
 
 router.get("/getQuizName/:quizId",checkAuth,(req,res)=>{
@@ -269,8 +254,7 @@ router.get("/getQuizName/:quizId",checkAuth,(req,res)=>{
 
 router.get("/showAllCreatedQuizes",checkAuth,(req,res)=>
 {
-    if(req.userData.access == "teacher")
-    {
+    
         pool.getConnection((err,con)=>
         {
             if(err)
@@ -312,14 +296,7 @@ router.get("/showAllCreatedQuizes",checkAuth,(req,res)=>
                 });
             }
         });
-    }
-
-    else
-    {
-        res.status(500).json({
-            message:"Unauthorized Access"
-        });
-    }
+    
 });
 
 router.get("/checkAccess",checkAuth,(req,res,next)=>{
@@ -336,9 +313,7 @@ router.post("/showAllAttempted",checkAuth,(req,res,next)=>{
             Message: "Required Data to be Sent Missing Please Refer Documentation"
         })
     }
-
-    if(req.userData.access == "teacher")
-    {
+    
         pool.getConnection((err,con)=>{
             if(err)
             {
@@ -372,13 +347,7 @@ router.post("/showAllAttempted",checkAuth,(req,res,next)=>{
                 });
             }
         });
-    }
-    else
-    {
-        res.status(500).json({
-            message:"Unauthorized Access"
-        });
-    }
+    
 });
 
 
